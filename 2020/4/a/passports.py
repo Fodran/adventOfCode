@@ -1,5 +1,5 @@
 def importData():
-    f = open("input", "r")
+    f = open("../input", "r")
 
     data = f.read()
     
