@@ -1,0 +1,88 @@
+path = "../input"
+
+
+
+def importData(path):
+    f = open(path, "r")
+
+    data = [int(line) for line in f]
+
+    f.close()
+
+    return data
+
+
+"""
+def checkChain(data):
+    chain = sorted(data)
+    differences = [chain[i + 1] - chain[i] for i in range(len(chain) - 1)]
+    if(max(differences) > 3):
+        return False
+    return True
+"""
+
+
+def originalChain(data):
+    chain = sorted(data) 
+    chain.insert(0, 0)
+    chain.append(chain[-1] + 3)
+    return chain
+
+
+
+def chainCombinations(originalChain):
+    differences = [originalChain[i + 1] - originalChain[i] for i in range(len(originalChain) - 1)]
+    counter = 1
+    for i in range(len(originalChain) - 1):
+        subCounter = 0
+        for j in range(1, 4):
+            if(originalChain[i] + j in originalChain):
+                subCounter += 1
+        counter *= subCounter
+    print(counter)
+
+"""
+    keepIndices = [i for i, e in enumerate(differences) if e == 3]
+    keepElements = []
+    otherElements = []
+    paths = [[0, 0]]
+    completed = False
+    stop = max(originalChain)
+
+    for i in keepIndices:
+        if(not(originalChain[i] in keepElements)):
+            keepElements.append(originalChain[i])
+        keepElements.append(originalChain[i+1])
+
+    if(not(0 in keepIndices)):
+        keepIndices.insert(0, 0)
+        keepElements.insert(0, 0)
+
+    for i in originalChain:
+        if(not(i in keepElements)):
+            otherElements.append(i)
+   
+    while not(completed):
+        tmpPaths = []
+        completed = True
+        for path in paths:
+            for i in range(1, 4):
+                if(path[1] + i in originalChain):
+                    tmpPaths.append([path[0] +1, path[1] + i])
+                    if(not(path[1] == stop)):
+                        completed = False
+
+        paths = tmpPaths.copy()
+        print(paths)
+"""
+
+
+
+def main():
+    results = chainCombinations(originalChain(importData(path)))
+    return 0
+
+
+
+if __name__ == "__main__":
+    main()
