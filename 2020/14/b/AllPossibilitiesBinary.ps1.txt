@@ -1,0 +1,33 @@
+﻿$Address = Read-Host Please specify the address you wanna check the possibilities for
+$CharArray = [char[]]$Address
+
+$ct = 0 
+
+foreach ($Letter in $CharArray | ? {$_ -eq "X"}){
+    $ct ++
+}
+
+
+write-host There is $ct values to combine 
+
+$Possibilities = [math]::Pow(2,$ct)
+
+Write-host there is $Possibilities possibilities
+
+for ($i=0; $i -lt $Possibilities;$i++){
+
+    if([Convert]::ToString($i,2).length -notlike $ct){
+        [char[]]$Binary = "0"*($ct-[Convert]::ToString($i,2).length)+[Convert]::ToString($i,2)
+    }
+    else{
+    [char[]]$Binary = [Convert]::ToString($i,2)
+    }
+
+    Write-Host $Binary
+    
+    for ($y=0;$y -lt $ct;$y++){
+     $Possibility = $CharArray -replace '(X.?)',$Binary[$y]
+    }
+
+    Write-Host Possibility $i : $Possibility
+}
