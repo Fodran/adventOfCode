@@ -17,7 +17,9 @@ def digestData(data):
 def isSegmentValid(segment):
     pointA = segment[0]
     pointB = segment[1]
-    if pointA[0] == pointB[0] or pointA[1] == pointB[1]:
+    diffX = pointB[0] - pointA[0]
+    diffY = pointB[1] - pointA[1]
+    if diffX == 0 or diffY == 0 or abs(diffX) == abs(diffY):
         return True
     return False
 
@@ -33,16 +35,23 @@ def extendSegment(segment):
     step = 1
     pointA = segment[0]
     pointB = segment[1]
+    diffX = pointB[0] - pointA[0]
+    diffY = pointB[1] - pointA[1]
     if pointA[0] == pointB[0]:
         if pointB[1] < pointA[1]:
             step = -1
         for i in range(pointA[1], pointB[1] + step, step):
             points.append([pointA[0], i])
-    else:
+    elif pointA[1] == pointB[1]:
         if pointB[0] < pointA[0]:
             step = -1
         for i in range(pointA[0], pointB[0] + step, step):
             points.append([i, pointA[1]])
+    else:
+        stepX = np.sign(diffX)
+        stepY = np.sign(diffY)
+        for i in range(abs(diffX) + 1):
+            points.append([pointA[0] + i * stepX, pointA[1] + i * stepY])
     return points
 
 
@@ -64,6 +73,7 @@ def countPoints(values_dict):
 def main():
     data = digestData(importData(inputPath))
     segments = selectValidSegments(data)
+    print(segments)
     print(countPoints(applySegments(segments)))
     return 0
 
