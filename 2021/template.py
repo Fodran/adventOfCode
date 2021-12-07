@@ -1,11 +1,9 @@
 inputPath = "../input"
 
 def importData(pathToFile):
-    lines = []
     with open(pathToFile) as file:
-        data = file.readlines()
-    for line in data:
-        lines.append(line[:-1])
+        data = file.read()
+    lines = data.split('\n')[:-1]
     return lines
 
 def main():
