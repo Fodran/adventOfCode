@@ -19,8 +19,11 @@ def optimalPosition(posList):
 def calcFuel(pos, posList):
     fuelCount = 0
     for p in posList:
-        fuelCount += abs(pos - p)
+        fuelCount += arSum(abs(pos - p))
     return fuelCount
+
+def arSum(nb):
+    return (nb + 1) * nb / 2
 
 def main():
     data = importData(inputPath)
