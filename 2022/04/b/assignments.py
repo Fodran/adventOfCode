@@ -10,7 +10,7 @@ def contained(duo):
     d1 = [int(i) for i in d1]
     d2 = [int(i) for i in d2]
     
-    if(d1[0] <= d2[0] and d1[1] >= d2[1] or d1[0] >= d2[0] and d1[1] <= d2[1]):
+    if(d1[0] <= d2[0] and d1[1] >= d2[0] or d1[0] >= d2[0] and d1[0] <= d2[1]):
         return True
 
     return False
