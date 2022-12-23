@@ -35,11 +35,16 @@ def extractInstructions(data):#convert string to list of instructions in the for
 
 
 
-def move(nb, dep, arr, containers):
+def move(nb, dep, arr, containers):#I think a cleaner way would be to only pass the needed columns.
     
-    for i in range(nb):
-        if containers[dep - 1]:#if list is not empty move item
-            containers[arr - 1].insert(0, containers[dep - 1].pop(0))
+    if not containers[dep - 1]:# if departure pile is empty return containers as is
+        return containers
+
+    if nb > len(containers[dep - 1]):# if number of containers to move > containers in pile then amount of containers to move becomes amount of containers in pile.
+        nb = len(containers[dep - 1])
+
+    containers[arr - 1] = containers[dep - 1][:nb] + containers[arr - 1]
+    containers[dep - 1] = containers[dep - 1][nb:]
 
     return containers
 
