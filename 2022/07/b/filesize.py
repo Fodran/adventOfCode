@@ -8,20 +8,13 @@ def importData(filePath):
 
 
 
-def findSum(dirDict):
-    s = 0
-    
-    for d in dirDict:
-        if dirDict[d] <= 100000:
-            s += dirDict[d]
-    
-    return s
-
-
-
 def readCommands(data):
     currentPath = []
     dirSizes = {}
+    deleteFolders = []
+    maxSpace = 70000000
+    unusedSpace = 0
+    space2free = 0
 
     for line in data:
         if line[:7] == '$ cd ..':
@@ -40,7 +33,14 @@ def readCommands(data):
                 dirSizes.setdefault(name, 0)
                 dirSizes[name] += size
 
-    print(findSum(dirSizes))
+    unusedSpace = 70000000 - dirSizes['/']
+    space2free = 30000000 - unusedSpace #can be shortened to space2free = dirSizes['/'] - 40000000
+    
+    for d in dirSizes:
+        if dirSizes[d] >= space2free:
+            deleteFolders.append(dirSizes[d])
+
+    print(min(deleteFolders))
 
     return 0 
 
